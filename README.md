@@ -16,7 +16,7 @@ In Coin Explorer, users will be able to:
 
 ## Wireframes
 
-![](src/images/sample_state.png)
+![](src/images/sample_stage.png)
 
 https://wireframe.cc/VIcLO6
 
