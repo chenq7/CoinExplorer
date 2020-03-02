@@ -23,20 +23,20 @@ https://wireframe.cc/VIcLO6
 ## Architecture and Technology
 
 * Javascript
-* Canvas
+* CanvasHTML
 
 ## Implementation Timeline
 
 * Day 1
   * Organize/update file structures, Research/write game logic
 * Day 2
-  * TBD
+  * Javascript/CanvasHTML - TBD
 * Day 3
-  * TBD
+  * Javascript/CanvasHTML - TBD
 * Day 4
-  * TBD
+  * Javascript/CanvasHTML - TBD
 * Day 5 
-  * TBD
+  * Javascript/CanvasHTML - TBD
 
 ## Bonus Features
 
