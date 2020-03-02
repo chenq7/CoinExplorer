@@ -1,7 +1,7 @@
 {
-  "name": "js_project_skeleton",
+  "name": "coin_explorer",
   "version": "1.0.0",
-  "description": "skeleton for new JS project",
+  "description": "Platform game when user collects coins in a limited time frame",
   "main": "index.js",
   "browserslist": [
     "last 1 version",
@@ -14,7 +14,7 @@
     "webpack:watch": "webpack --watch --config webpack.dev.js",
     "webpack:build": "webpack --config webpack.prod.js  --optimize-minimize"
   },
-  "author": "mrcjbradley",
+  "author": "Qixiang Chen",
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
@@ -37,5 +37,13 @@
     "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.8.2",
     "webpack-merge": "^4.2.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chenq7/CoinExplorer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/chenq7/CoinExplorer/issues"
+  },
+  "homepage": "https://github.com/chenq7/CoinExplorer#readme"
 }
