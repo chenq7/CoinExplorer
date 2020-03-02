@@ -11,9 +11,34 @@ In Coin Explorer, users will be able to:
 * Move left, right, and jump
 * Shoot monsters
 * Collect coins
-* See top scores 
+* See current time left and coins collected
+* See top scores on leaderboards 
 
-Bonus Features: 
+## Wireframes
+
+![Image description]https://wireframe.cc/VIcLO6
+
+https://wireframe.cc/VIcLO6
+
+## Architecture and Technology
+
+* Javascript
+* Canvas
+
+## Implementation Timeline
+
+* Day 1
+  * Organize/update file structures, Research/write game logic
+* Day 2
+  * TBD
+* Day 3
+  * TBD
+* Day 4
+  * TBD
+* Day 5 
+  * TBD
+
+## Bonus Features
+
 * Be able to buy new characters/weapons with coins (maybe different abilities)
 * Make the level randomly generated instead of a static level
-
