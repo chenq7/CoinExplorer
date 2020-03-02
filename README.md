@@ -42,3 +42,4 @@ https://wireframe.cc/VIcLO6
 
 * Be able to buy new characters/weapons with coins (maybe different abilities)
 * Make the level randomly generated instead of a static level
+* fog animation in background
