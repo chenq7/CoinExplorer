@@ -61,17 +61,70 @@ export default class Character {
     };
   }
 
-  update() {
+  update(board, tiles, coins) {
     this.position.x += this.x_velocity;
     this.position.y += this.y_velocity;
     
-    if (this.position.x < 0) this.position.x = 0;
-    if (this.position.x + this.characterWidth > this.gameWidth)
+    let left = this.position.x;
+    let right = this.position.x + this.characterWidth
+    let top = this.position.y;
+    let bottom = this.position.y + this.characterHeight;
+    
+    // Check map edges
+    if (left < 0) this.position.x = 0;
+    if (right > this.gameWidth)
       this.position.x = this.gameWidth - this.characterWidth;
-    
-    if (this.position.y + this.characterHeight > this.gameHeight) 
+    if (bottom > this.gameHeight)
       this.position.y = this.gameHeight - this.characterHeight;
-    if (this.position.y < 0) this.position.y = 0;
-    
+    if (top < 0) this.position.y = 0;
+
+    // Check for tile collision
+    // check for the four sides, if it hits a tile, reset position
+
+    // 600, 665
+    // handle down
+    let charLeft = Math.floor(left / 40);
+    let charRight = Math.floor(right / 40);
+    let charTop = Math.floor(top / 40);
+    let charBottom = Math.floor(bottom / 40);
+
+    // if (this.position.x < charLeft * 40 && board[charBottom-1][charLeft] instanceof Object && 
+    //   board[charBottom-1][charLeft].constructor.name === 'Tile'){
+    //   this.position.x = charLeft * 40;
+    // }
+    // if (this.position.x > charRight * 40 && board[charBottom-1][charRight] instanceof Object &&
+    //   board[charBottom-1][charRight].constructor.name === 'Tile') {
+    //   this.position.x = charRight * 40 - 40;
+    // }
+    // if (this.position.y > charTop * 40 && board[charTop][charLeft+1] instanceof Object &&
+    //   board[charTop][charLeft+1].constructor.name === 'Tile') {
+    //   this.position.y = charTop * 40;
+    // }
+    // if (this.position.y < charBottom * 40 && board[charBottom][charLeft+1] instanceof Object &&
+    //   board[charBottom][charLeft+1].constructor.name === 'Tile') {
+    //   this.position.y = charBottom * 40 - 55;
+    // }
+
+    // handle tile collision 
+    // for (let i=0; i < tiles.length; i++){
+    //   if (this.position.x < coins[i].position.x + coins[i].width){
+
+    //   }
+    // }
+
+
+    // handle coin collision
+    for (let i=0; i < coins.length; i++) {
+      if (
+        this.position.x < coins[i].position.x + coins[i].width &&
+        this.position.x + coins[i].width > coins[i].position.x &&
+        this.position.y < coins[i].position.y + coins[i].height &&
+        this.position.y + this.characterHeight > coins[i].position.y) {
+        debugger
+        coins.splice(i, 1);
+      }
+    }
+
+    return coins;
   }
 }

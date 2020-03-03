@@ -34,14 +34,13 @@ export default class Level {
     this.board = [];
     this.character = new Character(this.gameWidth, this.gameHeight, 600, 600);
     new InputHandler(this.character);
-    // this.initializeBoard = this.initializeBoard.bind(this);
+    this.coinsArr = [];
+    this.tilesArr = [];
+    this.score = 0;
     this.initializeBoard();
   }
 
   initializeBoard() {
-    // this.character = new Character(this.gameWidth, this.gameHeight, 400, 840);
-    // this.character.renderCharacter(this.ctx);
-    // new InputHandler(this.character);
     let pos_x;
     let pos_y;
     let temp;
@@ -51,13 +50,17 @@ export default class Level {
         pos_y = i * 40;
         pos_x = j * 40;
         if (GAME_MAP[i][j] === "#"){
-          temp.push(new Tile(pos_x, pos_y, this.ctx));
+          let tile = new Tile(pos_x, pos_y, this.ctx);
+          temp.push(tile);
+          this.tilesArr.push(tile);
         }
         else if (GAME_MAP[i][j] === "P"){
           temp.push(this.character);
         }
         else if (GAME_MAP[i][j] === "C") {
-          temp.push(new Coin(pos_x, pos_y, this.ctx));
+          let coin = new Coin(pos_x, pos_y, this.ctx);
+          temp.push(coin);
+          this.coinsArr.push(coin);
         }
         else {
           temp.push(" ");
@@ -65,28 +68,38 @@ export default class Level {
       }
       this.board.push(temp);
     }
-    debugger
   }
 
   updateBoard(time) {
-    this.ctx.clearRect(0, 0, this.gameWidth, this.gameHeight);
     if (!time) return;
-    for (let i = 0; i < this.board.length; i++) {
-      for (let j = 0; j < this.board[0].length; j++) {
-        if (this.board[i][j] instanceof Object && this.board[i][j].constructor.name === 'Tile'){
-          this.board[i][j].renderTile();    
-        }
-        else if (this.board[i][j] instanceof Object && this.board[i][j].constructor.name === 'Coin') {
-          this.board[i][j].renderCoin();
-        }
-      }
-    }
-    this.character.update();
-    this.character.renderCharacter(this.ctx);
+    this.ctx.clearRect(0, 0, this.gameWidth, this.gameHeight);
 
+    // Render score for coins
+    this.ctx.font = "20px Arial";
+    this.ctx.fillText("Coins:", this.gameWidth - 110, 30);
+    this.ctx.fillText(this.score, this.gameWidth - 40, 30);
+
+    // Render sakura trees
     const treeImage = new Image();
     treeImage.src = "./src/images/bg/sakura.png";
     this.ctx.drawImage(treeImage, 40, -20, 150, 300);
     this.ctx.drawImage(treeImage, 900, 80, 120, 200);
+    
+    // Render tiles
+    for (let i=0; i < this.tilesArr.length; i++){
+      this.tilesArr[i].renderTile();
+    }
+
+    // Render Coins
+    for (let i=0; i < this.coinsArr.length; i++){
+      this.coinsArr[i].renderCoin();
+    }
+    
+    // Render character
+    let numCoins = this.coinsArr.length;
+    this.coinsArr = this.character.update(this.board, this.tilesArr, this.coinsArr);
+    this.score += (numCoins - this.coinsArr.length);
+    this.character.renderCharacter(this.ctx);
+
   }
 }
