@@ -30,13 +30,13 @@ https://wireframe.cc/VIcLO6
 * Day 1
   * Organize/update file structures, Research/write game logic
 * Day 2
-  * Javascript/CanvasHTML - TBD
+  * Finish up player movement and working on level building
 * Day 3
-  * Javascript/CanvasHTML - TBD
+  * Finish up level building/collision, add coins
 * Day 4
-  * Javascript/CanvasHTML - TBD
+  * Add monsters, shooting, and leaderboards
 * Day 5 
-  * Javascript/CanvasHTML - TBD
+  * Add spikes, finish styling page, add music/sound
 
 ## Bonus Features
 
