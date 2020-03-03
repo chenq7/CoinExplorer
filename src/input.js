@@ -1,7 +1,6 @@
 
 export default class InputHandler {
   constructor(character){
-    // debugger
 
     document.addEventListener('keydown', (event) => {
       switch(event.keyCode) {

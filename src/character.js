@@ -1,33 +1,31 @@
 
 export default class Character {
-  constructor(gameWidth, gameHeight) {
+  constructor(gameWidth, gameHeight, startX, startY) {
     this.gameWidth = gameWidth;
     this.gameHeight = gameHeight;
-    this.characterWidth = 50;
+    this.characterWidth = 40;
     this.characterHeight = 60;
     this.jumping = true;
     this.x_velocity = 0;
-    this.y_velocity = 0;
-    this.position = { x: 400, y: gameHeight -  this.characterHeight }
+    this.y_velocity = 5;
+    this.position = { x: startX, y: startY }
   }
 
-  animate(ctx) {
-    this.moveCharacter();
-    this.renderCharacter(ctx);
-  }
+  // animate(ctx) {
+  //   this.moveCharacter();
+  //   this.renderCharacter(ctx);
+  // }
 
   renderCharacter(ctx) {
     const characterImage = new Image();
     characterImage.src = "./src/images/wizard/wizard/1_IDLE_000.png";
-      // ctx.fillStyle = "#0ff";
-      // ctx.fillRect(this.position.x, this.position.y, this.characterWidth, this.characterHeight);
-      ctx.drawImage(
-        characterImage,
-        this.position.x,
-        this.position.y,
-        this.characterWidth,
-        this.characterHeight
-      );
+    ctx.drawImage(
+      characterImage,
+      this.position.x,
+      this.position.y,
+      this.characterWidth,
+      this.characterHeight
+    );
   }
 
   moveCharacter(direction) {
@@ -59,9 +57,7 @@ export default class Character {
     };
   }
 
-  update(time) {
-    debugger
-    if (!time) return;
+  update() {
     this.position.x += this.x_velocity;
     this.position.y += this.y_velocity;
     

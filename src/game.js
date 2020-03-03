@@ -1,6 +1,6 @@
-import Character from "./character";
-import InputHandler from "./input";
-
+// import Character from "./character";
+// import InputHandler from "./input";
+import Level from "./level";
 
 export default class CoinExplorer {
   constructor(canvas){
@@ -16,18 +16,13 @@ export default class CoinExplorer {
   newGame(){
     this.coins = 0;
     this.time = 60;
-    this.character = new Character(this.gameWidth, this.gameHeight);
-    this.character.renderCharacter(this.ctx);
-    new InputHandler(this.character);
+    this.board = new Level(this.gameWidth, this.gameHeight, this.ctx);
   }
 
   gameLoop(timestamp) {
-    // debugger
     let time = timestamp - this.prevTime;
     this.prevTime = timestamp;
-    this.ctx.clearRect(0, 0, this.gameWidth, this.gameHeight);
-    this.character.update(time);
-    this.character.renderCharacter(this.ctx);
+    this.board.updateBoard(time);
 
     requestAnimationFrame(this.gameLoop);
   }
