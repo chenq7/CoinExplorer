@@ -4,23 +4,19 @@ export default class Character {
     this.gameWidth = gameWidth;
     this.gameHeight = gameHeight;
     this.characterWidth = 40;
-    this.characterHeight = 60;
+    this.characterHeight = 55;
     this.jumping = true;
     this.x_velocity = 0;
     this.y_velocity = 5;
     this.position = { x: startX, y: startY }
+    this.characterImage = new Image();
+    this.characterImage.src = "./src/images/wizard/wizard/1_IDLE_000.png";
+    this.flipped = false;
   }
 
-  // animate(ctx) {
-  //   this.moveCharacter();
-  //   this.renderCharacter(ctx);
-  // }
-
   renderCharacter(ctx) {
-    const characterImage = new Image();
-    characterImage.src = "./src/images/wizard/wizard/1_IDLE_000.png";
     ctx.drawImage(
-      characterImage,
+      this.characterImage,
       this.position.x,
       this.position.y,
       this.characterWidth,
@@ -34,9 +30,17 @@ export default class Character {
         this.x_velocity = 0;
         break;
       case 'left':
+        if (!this.flipped){
+          this.flipped = true;
+          this.characterImage.src = "./src/images/wizard/wizard/1_IDLE_0001.png";
+        }
         this.x_velocity = -7;
         break;
       case 'right':
+        if (this.flipped) {
+          this.flipped = false;
+          this.characterImage.src = "./src/images/wizard/wizard/1_IDLE_000.png";
+        }
         this.x_velocity = 7; 
         break;
       case 'up':

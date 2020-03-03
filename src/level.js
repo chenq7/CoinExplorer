@@ -83,5 +83,10 @@ export default class Level {
     }
     this.character.update();
     this.character.renderCharacter(this.ctx);
+
+    const treeImage = new Image();
+    treeImage.src = "./src/images/bg/sakura.png";
+    this.ctx.drawImage(treeImage, 40, -20, 150, 300);
+    this.ctx.drawImage(treeImage, 900, 80, 120, 200);
   }
 }
