@@ -74,8 +74,8 @@ export default class Character {
     }
   }
 
-  update(board, tiles, coins) {
-    this.prevPosition.y = this.position.x;
+  update(board, coins) {
+    this.prevPosition.x = this.position.x;
     this.prevPosition.y = this.position.y;
     
     this.position.x += this.x_velocity;
@@ -110,33 +110,45 @@ export default class Character {
     value = board[bottom][right];
     this.handleTileCollision(value, right * 40, bottom * 40, 40);
 
-    return this.handleCoinCollision(coins);
-    
+    if (this.getBottom() > this.gameHeight) this.setBottom(this.gameHeight);
+    return this.handleCoinCollision(coins);   
   }
 
   handleEdgeCollision() {
-    if (this.getLeft() < 0) this.setLeft(0);
-    if (this.getRight() > this.gameWidth) this.setRight(this.gameWidth);
-    if (this.getTop() < 0) this.setTop(0);
-    if (this.getBottom() > this.gameHeight) this.setBottom(this.gameHeight);
+    if (this.getLeft() < 0) {
+      this.setPrevLeft(this.getLeft());
+      this.setLeft(0);
+    }
+    if (this.getRight() > this.gameWidth){
+      this.setPrevRight(this.getRight());
+      this.setRight(this.gameWidth);
+    } 
+    if (this.getTop() < 0){
+      this.setPrevTop(this.getTop());
+      this.setTop(0);
+    } 
+    if (this.getBottom() > this.gameHeight){
+      this.setPrevBottom(this.getBottom());
+      this.setBottom(this.gameHeight);
+    } 
   }
 
   handleCoinCollision(coins) {
     for (let i = 0; i < coins.length; i++) {
       if (
-        this.position.x < coins[i].position.x + coins[i].width &&
-        this.position.x + coins[i].width > coins[i].position.x &&
-        this.position.y < coins[i].position.y + coins[i].height &&
-        this.position.y + this.characterHeight > coins[i].position.y) {
+        this.getLeft() < coins[i].position.x + coins[i].width &&
+        this.getLeft() + coins[i].width > coins[i].position.x &&
+        this.getTop() < coins[i].position.y + coins[i].height &&
+        this.getBottom() > coins[i].position.y) {
         coins.splice(i, 1);
       }
     }
+
     return coins;
   }
 
   handleTileCollision(value, tileX, tileY, tileSize){
     if (value instanceof Object && value.constructor.name === 'Tile'){
-      debugger
       if (this.topTileCollision(tileY)) return;
       if (this.leftTileCollision(tileX)) return;
       if (this.rightTileCollision(tileX + tileSize)) return;
@@ -146,6 +158,7 @@ export default class Character {
 
   bottomTileCollision(bottomTile){
     if (this.getTop() < bottomTile && this.getPrevTop() >= bottomTile){
+      this.setPrevTop(this.getTop());
       this.setTop(bottomTile);
       return true;
     }
@@ -154,14 +167,16 @@ export default class Character {
 
   leftTileCollision(leftTile){
     if (this.getRight() > leftTile && this.getPrevRight() <= leftTile){
-        this.setRight(leftTile - 0.01);
-        return true; 
+      this.setPrevRight(this.getRight());
+      this.setRight(leftTile - 0.01);
+      return true; 
     }
     return false;
   }
 
   rightTileCollision(rightTile){
     if (this.getLeft() < rightTile && this.getPrevLeft() >= rightTile){
+      this.setPrevLeft(this.getLeft());
       this.setLeft(rightTile);
       return true;
     }
@@ -170,8 +185,9 @@ export default class Character {
 
   topTileCollision(topTile){
     if (this.getBottom() > topTile && this.getPrevBottom() <= topTile){
-        this.setBottom(topTile - 0.01);
-        return true;
+      this.setPrevBottom(this.getBottom());
+      this.setBottom(topTile - 0.01);
+      return true;
     }
     return false;
   }

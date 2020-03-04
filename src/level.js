@@ -5,23 +5,23 @@ import Coin from "./coin";
 
 // size 25 x 18 (1000 x 720), 40 x 40 pixels per block
 let GAME_MAP = new Array(
+  "                         ",
   "         C   C   C       ",
   "       ############      ",
   "                         ",
+  "   ##                ##  ",
   "                         ",
-  "      ###    ###   ###   ",
+  "   M     M               ",
+  "###############    ######",
   "                         ",
-  "    M      M             ",
-  "#################    ####",
-  "                         ",
-  "C                      C",
-  "#              ###    ###",
+  "C                       C",
+  "#       ##     ###    ###",
   "##M                      ",
   "####        C         M  ",
-  "######     ### C  #######",
-  "               #         ",
-  "C       #                ",
-  "C     M # C    P    C   C",
+  "######  C  ###   C  #####",
+  "        #       ##       ",
+  "C                        ",
+  "C      M       P    C   C",
   "#   #######   ###  ###  #"
 );
 
@@ -95,10 +95,12 @@ export default class Level {
       this.coinsArr[i].renderCoin();
     }
     
-    // Render character
+    // Update score and character position
     let numCoins = this.coinsArr.length;
-    this.coinsArr = this.character.update(this.board, this.tilesArr, this.coinsArr);
+    this.coinsArr = this.character.update(this.board, this.coinsArr);
     this.score += (numCoins - this.coinsArr.length);
+
+    // Render character
     this.character.renderCharacter(this.ctx);
 
   }
