@@ -36,7 +36,6 @@ export default class Level {
     new InputHandler(this.character);
     this.coinsArr = [];
     this.tilesArr = [];
-    this.score = 0;
     this.initializeBoard();
   }
 
@@ -72,12 +71,6 @@ export default class Level {
 
   updateBoard(time) {
     if (!time) return;
-    this.ctx.clearRect(0, 0, this.gameWidth, this.gameHeight);
-
-    // Render score for coins
-    this.ctx.font = "20px Arial";
-    this.ctx.fillText("Coins:", this.gameWidth - 110, 30);
-    this.ctx.fillText(this.score, this.gameWidth - 40, 30);
 
     // Render sakura trees
     const treeImage = new Image();
@@ -98,10 +91,11 @@ export default class Level {
     // Update score and character position
     let numCoins = this.coinsArr.length;
     this.coinsArr = this.character.update(this.board, this.coinsArr);
-    this.score += (numCoins - this.coinsArr.length);
-
+    
     // Render character
     this.character.renderCharacter(this.ctx);
-
+    
+    debugger
+    return (numCoins - this.coinsArr.length);
   }
 }
