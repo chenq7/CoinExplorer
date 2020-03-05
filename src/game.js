@@ -5,19 +5,19 @@ export default class CoinExplorer {
     this.ctx = gameCanvas.getContext("2d");
     this.gameWidth = gameCanvas.width;
     this.gameHeight = gameCanvas.height;
-    this.renderHomePage();
+    this.renderHomeScreen();
     this.gameRunning = false;
     document.addEventListener('keydown', event => {
       debugger
       if (event.keyCode === 27) {
         debugger
         this.gameRunning = false;
-        this.renderHomePage();
+        this.renderHomeScreen();
       }
     });
   }
 
-  renderHomePage() {
+  renderHomeScreen() {
     this.ctx.clearRect(0, 0, this.gameWidth, this.gameHeight);
 
     this.ctx.font = "bold 80px Arial";

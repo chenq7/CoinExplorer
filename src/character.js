@@ -101,11 +101,13 @@ export default class Character {
     this.handleTileCollision(value, right * 40, top * 40, 40);
 
     bottom = Math.floor(this.getBottom()/ 40);
+    bottom = (bottom > 17 ? 17 : bottom);
     left = Math.floor(this.getLeft() / 40);
     value = board[bottom][left];
     this.handleTileCollision(value, left * 40, bottom * 40, 40);
 
     bottom = Math.floor(this.getBottom() / 40);
+    bottom = (bottom > 17 ? 17 : bottom);
     right = Math.floor(this.getRight() / 40);
     value = board[bottom][right];
     this.handleTileCollision(value, right * 40, bottom * 40, 40);
