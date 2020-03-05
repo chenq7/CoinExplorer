@@ -5,34 +5,35 @@ import Coin from "./coin";
 import Spike from "./spike";
 
 // size 25 x 18 (1000 x 720), 40 x 40 pixels per block
-let GAME_MAP = new Array(
-  "                         ",
-  "         C S C S C       ",
-  "       ############      ",
-  "                         ",
-  "   ##                ##  ",
-  "                         ",
-  "   M     M            SS ",
-  "###############    ######",
-  "                         ",
-  "C        S              C",
-  "#       ##     ###    ###",
-  "##M                      ",
-  "####S       C         M  ",
-  "######  C  ###   C  #####",
-  "        #       ##       ",
-  "C                        ",
-  "C      M       P    C   C",
-  "#SSS#######   ###  ###SS#"
-);
+// let GAME_MAP = new Array(
+//   "                         ",
+//   "         C S C S C       ",
+//   "       ############      ",
+//   "                         ",
+//   "   ##                ##  ",
+//   "                         ",
+//   "   M     M            SS ",
+//   "###############    ######",
+//   "                         ",
+//   "C        S              C",
+//   "#       ##     ###    ###",
+//   "##M                      ",
+//   "####S       C         M  ",
+//   "######  C  ###   C  #####",
+//   "        #       ##       ",
+//   "C                        ",
+//   "C      M       P    C   C",
+//   "#SSS#######   ###  ###SS#"
+// );
 
 
 export default class Board {
-  constructor(gameWidth, gameHeight, ctx){
+  constructor(gameWidth, gameHeight, ctx, level){
+    debugger
     this.ctx = ctx;
     this.gameWidth = gameWidth;
     this.gameHeight = gameHeight;
-    this.board = [];
+    this.board = level;
     this.character = new Character(this.gameWidth, this.gameHeight, 600, 600);
     new InputHandler(this.character);
     this.coinsArr = [];
@@ -42,28 +43,29 @@ export default class Board {
   }
 
   initializeBoard() {
+    debugger
     let pos_x;
     let pos_y;
     let temp;
-    for (let i = 0; i < GAME_MAP.length; i++){
+    for (let i = 0; i < this.board.length; i++){
       temp = [];
-      for (let j = 0; j < GAME_MAP[0].length; j++) {
+      for (let j = 0; j < this.board[0].length; j++) {
         pos_y = i * 40;
         pos_x = j * 40;
-        if (GAME_MAP[i][j] === "#"){
+        if (this.board[i][j] === "#"){
           let tile = new Tile(pos_x, pos_y, this.ctx);
           temp.push(tile);
           this.tilesArr.push(tile);
         }
-        else if (GAME_MAP[i][j] === "P"){
+        else if (this.board[i][j] === "P"){
           temp.push(this.character);
         }
-        else if (GAME_MAP[i][j] === "C") {
+        else if (this.board[i][j] === "C") {
           let coin = new Coin(pos_x, pos_y, this.ctx);
           temp.push(coin);
           this.coinsArr.push(coin);
         }
-        else if (GAME_MAP[i][j] === "S") {
+        else if (this.board[i][j] === "S") {
           let spike = new Spike(pos_x, pos_y, this.ctx);
           temp.push(spike);
           this.spikesArr.push(spike);
@@ -72,7 +74,7 @@ export default class Board {
           temp.push(" ");
         }
       }
-      this.board.push(temp);
+      this.board[i] = temp;
     }
     debugger
     this.numCoins = this.coinsArr.length;

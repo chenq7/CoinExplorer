@@ -1,4 +1,5 @@
 import Board from "./board";
+import Levels from "./levels";
 
 export default class CoinExplorer {
   constructor(gameCanvas){
@@ -7,7 +8,7 @@ export default class CoinExplorer {
     this.gameHeight = gameCanvas.height;
     this.renderHomeScreen();
     this.gameRunning = false;
-
+    this.currentLevel = 1;
     // esc key for home screen
     document.addEventListener('keydown', event => {
       if (event.keyCode === 27) {
@@ -52,9 +53,10 @@ export default class CoinExplorer {
 
   checkEnter(event) {
     if (event.keyCode === 13) {
+      debugger
       document.removeEventListener('keydown', this.checkEnter);
       this.ctx.fillStyle = "black"
-      this.gameRunning = true;
+      this.currentLevel = 1;
       this.newGame();
     }
   }
@@ -104,7 +106,7 @@ export default class CoinExplorer {
     this.ctx.fillText("YOU WIN!", 300, 200);
 
     this.ctx.font = "bold 30px Arial";
-    this.ctx.fillText("Press r key to retry level", 325, 500);
+    this.ctx.fillText("Congrats on beating the game!", 280, 500);
 
     this.ctx.font = "bold 20px Arial";
     this.ctx.fillText("Press esc to go back to home screen", 325, 560);
@@ -115,15 +117,17 @@ export default class CoinExplorer {
     }.bind(this);
     chest.src = "./src/images/items/chest-gold-close.png";
 
-    this.checkRestart = this.checkRestart.bind(this);
-    document.addEventListener('keydown', this.checkRestart);
   }
 
   newGame(){
+    debugger
+    this.gameRunning = true;
     this.coins = 0;
     this.time = 60;
     this.prevTime = 0;
-    this.board = new Board(this.gameWidth, this.gameHeight, this.ctx);
+    this.levels = new Levels().getLevels()
+    this.maxLevel = this.levels.length - 1;
+    this.board = new Board(this.gameWidth, this.gameHeight, this.ctx, this.levels[this.currentLevel]);
     this.gameLoop = this.gameLoop.bind(this);
     this.gameLoop();
   }
@@ -140,6 +144,7 @@ export default class CoinExplorer {
 
     let result = this.board.updateBoard(time);
     if (typeof result === 'boolean'){
+      debugger
       this.gameRunning = false;
       this.renderGameOver();
       return;
@@ -147,8 +152,15 @@ export default class CoinExplorer {
 
     this.coins += (isNaN(result) ? 0 : result);
     if (this.coins >= this.board.numCoins){
+      debugger
       this.gameRunning = false;
-      this.renderWin();
+      if (this.currentLevel < this.maxLevel){
+        this.currentLevel += 1;
+        this.newGame();
+      }
+      else {
+        this.renderWin();
+      }
       return;
     }
     requestAnimationFrame(this.gameLoop);

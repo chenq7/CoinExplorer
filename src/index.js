@@ -1,6 +1,6 @@
 import "./styles/reset.css";
 import "./styles/index.scss";
-import CoinExplorer from './game';
+import CoinExplorer from './scripts/game';
 
 const gameCanvas = document.getElementById('game-canvas');
 
