@@ -95,7 +95,6 @@ export default class Level {
     // Render character
     this.character.renderCharacter(this.ctx);
     
-    debugger
     return (numCoins - this.coinsArr.length);
   }
 }

@@ -30,11 +30,12 @@ img {
   width: 1400px;
   font-family: 'Teko', sans-serif;
   color: #F9FF60;
-  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-  font-size: 30px;
+  text-shadow: -2px 0 blue, 0 2px blue, 2px 0 blue, 0 -2px blue;
+  font-size: 40px;
   text-transform: uppercase;
   text-align: center;
   font-weight: bolder;
+  
 }
 
 .links {
@@ -53,4 +54,6 @@ img {
   background-color: white;
 }
 
-
+.homepage {
+  z-index: 10;
+}
