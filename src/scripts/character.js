@@ -5,7 +5,7 @@ export default class Character {
     this.gameHeight = gameHeight;
     this.characterWidth = 40;
     this.characterHeight = 40;
-    this.jumping = true;
+    this.jumping = false;
     this.x_velocity = 0;
     this.y_velocity = 5;
     this.position = { x: startX, y: startY }

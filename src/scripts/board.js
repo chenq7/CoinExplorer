@@ -5,27 +5,6 @@ import Coin from "./coin";
 import Spike from "./spike";
 
 // size 25 x 18 (1000 x 720), 40 x 40 pixels per block
-// let GAME_MAP = new Array(
-//   "                         ",
-//   "         C S C S C       ",
-//   "       ############      ",
-//   "                         ",
-//   "   ##                ##  ",
-//   "                         ",
-//   "   M     M            SS ",
-//   "###############    ######",
-//   "                         ",
-//   "C        S              C",
-//   "#       ##     ###    ###",
-//   "##M                      ",
-//   "####S       C         M  ",
-//   "######  C  ###   C  #####",
-//   "        #       ##       ",
-//   "C                        ",
-//   "C      M       P    C   C",
-//   "#SSS#######   ###  ###SS#"
-// );
-
 
 export default class Board {
   constructor(gameWidth, gameHeight, ctx, level){
