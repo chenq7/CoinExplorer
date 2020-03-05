@@ -17,32 +17,6 @@ export default class CoinExplorer {
     });
   }
 
-  renderGameOver() {
-    this.ctx.clearRect(0, 0, this.gameWidth, this.gameHeight);
-
-    this.ctx.fillStyle = "black";
-    this.ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
-
-    this.ctx.font = "bold 80px Arial";
-    this.ctx.fillStyle = "white";
-    this.ctx.fillText("GAME OVER", 250, 300);
-
-    this.ctx.font = "bold 30px Arial";
-    this.ctx.fillText("Press r key to retry level", 325, 500);
-
-    this.ctx.font = "bold 20px Arial";
-    this.ctx.fillText("Press esc to go back to home screen", 325, 560);
-
-    const sadSlime = new Image();
-    sadSlime.onload = function () {
-      this.ctx.drawImage(sadSlime, 730, 500, 298, 200);
-    }.bind(this);
-    sadSlime.src = "./src/images/slime/sad-slime.png";
-
-    this.checkRestart = this.checkRestart.bind(this);
-    document.addEventListener('keydown', this.checkRestart);
-  }
-
   renderHomeScreen() {
     this.ctx.clearRect(0, 0, this.gameWidth, this.gameHeight);
 
@@ -85,12 +59,64 @@ export default class CoinExplorer {
     }
   }
 
+  renderGameOver() {
+    this.ctx.clearRect(0, 0, this.gameWidth, this.gameHeight);
+
+    this.ctx.fillStyle = "black";
+    this.ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
+
+    this.ctx.font = "bold 80px Arial";
+    this.ctx.fillStyle = "white";
+    this.ctx.fillText("GAME OVER", 250, 300);
+
+    this.ctx.font = "bold 30px Arial";
+    this.ctx.fillText("Press r key to retry level", 325, 500);
+
+    this.ctx.font = "bold 20px Arial";
+    this.ctx.fillText("Press esc to go back to home screen", 325, 560);
+
+    const sadSlime = new Image();
+    sadSlime.onload = function () {
+      this.ctx.drawImage(sadSlime, 730, 500, 298, 200);
+    }.bind(this);
+    sadSlime.src = "./src/images/slime/sad-slime.png";
+
+    this.checkRestart = this.checkRestart.bind(this);
+    document.addEventListener('keydown', this.checkRestart);
+  }
+
   checkRestart(event) {
     if (event.keyCode === 82) {
       document.removeEventListener('keydown', this.checkRestart);
       this.gameRunning = true;
       this.newGame();
     }
+  }
+
+  renderWin() {
+    this.ctx.clearRect(0, 0, this.gameWidth, this.gameHeight);
+
+    this.ctx.fillStyle = "black";
+    this.ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
+
+    this.ctx.font = "bold 80px Arial";
+    this.ctx.fillStyle = "white";
+    this.ctx.fillText("YOU WIN!", 300, 200);
+
+    this.ctx.font = "bold 30px Arial";
+    this.ctx.fillText("Press r key to retry level", 325, 500);
+
+    this.ctx.font = "bold 20px Arial";
+    this.ctx.fillText("Press esc to go back to home screen", 325, 560);
+
+    const chest = new Image();
+    chest.onload = function () {
+      this.ctx.drawImage(chest, 430, 250, 139, 149);
+    }.bind(this);
+    chest.src = "./src/images/items/chest-gold-close.png";
+
+    this.checkRestart = this.checkRestart.bind(this);
+    document.addEventListener('keydown', this.checkRestart);
   }
 
   newGame(){
@@ -120,7 +146,11 @@ export default class CoinExplorer {
     }
 
     this.coins += (isNaN(result) ? 0 : result);
-    
+    if (this.coins >= this.board.numCoins){
+      this.gameRunning = false;
+      this.renderWin();
+      return;
+    }
     requestAnimationFrame(this.gameLoop);
   }
 

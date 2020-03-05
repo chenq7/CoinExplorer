@@ -74,6 +74,8 @@ export default class Board {
       }
       this.board.push(temp);
     }
+    debugger
+    this.numCoins = this.coinsArr.length;
   }
 
   updateBoard(time) {
