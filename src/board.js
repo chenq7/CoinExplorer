@@ -2,31 +2,32 @@ import Character from "./character";
 import InputHandler from "./input";
 import Tile from "./tile";
 import Coin from "./coin";
+import Spike from "./spike";
 
 // size 25 x 18 (1000 x 720), 40 x 40 pixels per block
 let GAME_MAP = new Array(
   "                         ",
-  "         C   C   C       ",
+  "         C S C S C       ",
   "       ############      ",
   "                         ",
   "   ##                ##  ",
   "                         ",
-  "   M     M               ",
+  "   M     M            SS ",
   "###############    ######",
   "                         ",
-  "C                       C",
+  "C        S              C",
   "#       ##     ###    ###",
   "##M                      ",
-  "####        C         M  ",
+  "####S       C         M  ",
   "######  C  ###   C  #####",
   "        #       ##       ",
   "C                        ",
   "C      M       P    C   C",
-  "#   #######   ###  ###  #"
+  "#SSS#######   ###  ###SS#"
 );
 
 
-export default class Level {
+export default class Board {
   constructor(gameWidth, gameHeight, ctx){
     this.ctx = ctx;
     this.gameWidth = gameWidth;
@@ -36,6 +37,7 @@ export default class Level {
     new InputHandler(this.character);
     this.coinsArr = [];
     this.tilesArr = [];
+    this.spikesArr = [];
     this.initializeBoard();
   }
 
@@ -60,6 +62,11 @@ export default class Level {
           let coin = new Coin(pos_x, pos_y, this.ctx);
           temp.push(coin);
           this.coinsArr.push(coin);
+        }
+        else if (GAME_MAP[i][j] === "S") {
+          let spike = new Spike(pos_x, pos_y, this.ctx);
+          temp.push(spike);
+          this.spikesArr.push(spike);
         }
         else {
           temp.push(" ");
@@ -87,10 +94,17 @@ export default class Level {
     for (let i=0; i < this.coinsArr.length; i++){
       this.coinsArr[i].renderCoin();
     }
-    
+
+    // Render spikes
+    for (let i = 0; i < this.spikesArr.length; i++) {
+      this.spikesArr[i].renderSpike();
+    }
+
     // Update score and character position
     let numCoins = this.coinsArr.length;
-    this.coinsArr = this.character.update(this.board, this.coinsArr);
+    let result = this.character.update(this.board, this.coinsArr, this.spikesArr);
+    if (typeof result === 'boolean') return true;
+    this.coinsArr = result;
     
     // Render character
     this.character.renderCharacter(this.ctx);

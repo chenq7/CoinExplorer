@@ -74,7 +74,7 @@ export default class Character {
     }
   }
 
-  update(board, coins) {
+  update(board, coins, spikes) {
     this.prevPosition.x = this.position.x;
     this.prevPosition.y = this.position.y;
     
@@ -113,6 +113,8 @@ export default class Character {
     this.handleTileCollision(value, right * 40, bottom * 40, 40);
 
     if (this.getBottom() > this.gameHeight) this.setBottom(this.gameHeight);
+
+    if (this.handleSpikeCollision(spikes)) return true;;
     return this.handleCoinCollision(coins);   
   }
 
@@ -145,8 +147,20 @@ export default class Character {
         coins.splice(i, 1);
       }
     }
-
     return coins;
+  }
+
+  handleSpikeCollision(spikes) {
+    for (let i = 0; i < spikes.length; i++) {
+      if (
+        this.getLeft() < spikes[i].position.x + spikes[i].width &&
+        this.getLeft() + spikes[i].width > spikes[i].position.x &&
+        this.getTop() < spikes[i].position.y + spikes[i].height &&
+        this.getBottom() > spikes[i].position.y) {
+        return true;
+      }
+    }
+    return false;
   }
 
   handleTileCollision(value, tileX, tileY, tileSize){

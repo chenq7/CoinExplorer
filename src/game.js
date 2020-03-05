@@ -1,4 +1,4 @@
-import Level from "./level";
+import Board from "./board";
 
 export default class CoinExplorer {
   constructor(gameCanvas){
@@ -7,14 +7,40 @@ export default class CoinExplorer {
     this.gameHeight = gameCanvas.height;
     this.renderHomeScreen();
     this.gameRunning = false;
+
+    // esc key for home screen
     document.addEventListener('keydown', event => {
-      debugger
       if (event.keyCode === 27) {
-        debugger
         this.gameRunning = false;
         this.renderHomeScreen();
       }
     });
+  }
+
+  renderGameOver() {
+    this.ctx.clearRect(0, 0, this.gameWidth, this.gameHeight);
+
+    this.ctx.fillStyle = "black";
+    this.ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
+
+    this.ctx.font = "bold 80px Arial";
+    this.ctx.fillStyle = "white";
+    this.ctx.fillText("GAME OVER", 250, 300);
+
+    this.ctx.font = "bold 30px Arial";
+    this.ctx.fillText("Press r key to retry level", 325, 500);
+
+    this.ctx.font = "bold 20px Arial";
+    this.ctx.fillText("Press esc to go back to home screen", 325, 560);
+
+    const sadSlime = new Image();
+    sadSlime.onload = function () {
+      this.ctx.drawImage(sadSlime, 730, 500, 298, 200);
+    }.bind(this);
+    sadSlime.src = "./src/images/slime/sad-slime.png";
+
+    this.checkRestart = this.checkRestart.bind(this);
+    document.addEventListener('keydown', this.checkRestart);
   }
 
   renderHomeScreen() {
@@ -29,10 +55,22 @@ export default class CoinExplorer {
 
     this.ctx.fillStyle = "blue"
     this.ctx.font = "bold 30px Arial";
-    this.ctx.fillText("Press Enter to Begin Game!", 300, 500);
+    this.ctx.fillText("Press Enter to Begin!", 350, 500);
 
     this.ctx.font = "bold 20px Arial";
-    this.ctx.fillText("Press esc to go back to home", 350, 550);
+    this.ctx.fillText("Press esc to go back to home screen", 340, 560);
+
+    const coin = new Image();
+    coin.onload = function () {
+      this.ctx.drawImage(coin, 280, 470, 40, 40);
+    }.bind(this);
+    coin.src = "./src/images/items/coin-gold.png";
+
+    const slime = new Image();
+    slime.onload = function() {
+      this.ctx.drawImage(slime, 280, 530, 40, 40);
+    }.bind(this);
+    slime.src = "./src/images/slime/slime.png";
 
     this.checkEnter = this.checkEnter.bind(this);
     document.addEventListener('keydown', this.checkEnter);
@@ -47,18 +85,26 @@ export default class CoinExplorer {
     }
   }
 
+  checkRestart(event) {
+    if (event.keyCode === 82) {
+      document.removeEventListener('keydown', this.checkRestart);
+      this.gameRunning = true;
+      this.newGame();
+    }
+  }
+
   newGame(){
     this.coins = 0;
     this.time = 60;
     this.prevTime = 0;
-    this.level = new Level(this.gameWidth, this.gameHeight, this.ctx);
+    this.board = new Board(this.gameWidth, this.gameHeight, this.ctx);
     this.gameLoop = this.gameLoop.bind(this);
     this.gameLoop();
   }
 
   gameLoop(timestamp) {
     if (!this.gameRunning) return;
-
+  
     let time = timestamp - this.prevTime;
     this.prevTime = timestamp;
 
@@ -66,9 +112,15 @@ export default class CoinExplorer {
 
     this.renderCoins(this.coins)
 
-    let coins = this.level.updateBoard(time);
-    this.coins += (isNaN(coins) ? 0 : coins);
+    let result = this.board.updateBoard(time);
+    if (typeof result === 'boolean'){
+      this.gameRunning = false;
+      this.renderGameOver();
+      return;
+    }
 
+    this.coins += (isNaN(result) ? 0 : result);
+    
     requestAnimationFrame(this.gameLoop);
   }
 
