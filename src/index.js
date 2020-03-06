@@ -2,9 +2,11 @@ import "./styles/reset.css";
 import "./styles/index.scss";
 import CoinExplorer from './scripts/game';
 
-const gameCanvas = document.getElementById('game-canvas');
+document.addEventListener("DOMContentLoaded", () => {
+  const gameCanvas = document.getElementById('game-canvas');
+  new CoinExplorer(gameCanvas);
+});
 
-new CoinExplorer(gameCanvas);
 
 
 // const ctx = canvas.getContext("2d"); //magic paint brush that creates 2d elements
