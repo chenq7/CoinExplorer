@@ -6,16 +6,70 @@ export default class CoinExplorer {
     this.ctx = gameCanvas.getContext("2d");
     this.gameWidth = gameCanvas.width;
     this.gameHeight = gameCanvas.height;
-    this.renderHomeScreen();
     this.gameRunning = false;
     this.currentLevel = 1;
-    // esc key for home screen
+    this.muted = false;
+    this.setSound();
+    this.renderHomeScreen();
+    this.addListeners();
+  }
+
+  setSound() {
+    this.menuMusic = new Audio("./src/audio/music/main-menu.mp3");
+    this.menuMusic.volume = 0.3;
+    this.menuMusic.loop = true;
+    this.gameMusic = new Audio("./src/audio/music/background.mp3");
+    this.gameMusic.loop = true;
+    this.winMusic = new Audio("./src/audio/music/victory.mp3");
+    this.winMusic.loop = true;
+    this.winMusic.volume = 0.35;
+    this.selectSound = new Audio("./src/audio/sound/select.wav");
+  }
+
+  play(sound) {
+    if (this.muted) return;
+    sound.pause();
+    sound.currentTime = 0;
+    sound.play();
+  }
+
+  pauseAllMusic(){
+    this.menuMusic.pause();
+    this.gameMusic.pause();
+    this.winMusic.pause();
+  }
+
+  addListeners(){
+    document.addEventListener('click', event => {
+      if (!this.gameRunning && !this.muted) {
+        this.menuMusic.play();
+      }
+    });
     document.addEventListener('keydown', event => {
       if (event.keyCode === 27) {
         this.gameRunning = false;
+        this.pauseAllMusic();
+        this.play(this.selectSound);
+        this.play(this.menuMusic);
         this.renderHomeScreen();
       }
+      if (event.keyCode === 77){
+        if (this.muted){
+          if (this.gameRunning){
+            this.gameMusic.play();
+          }
+          else {
+            this.menuMusic.play();
+          }
+          this.muted = false;
+        }
+        else {
+          this.pauseAllMusic();
+          this.muted = true;
+        }
+      }
     });
+
   }
 
   renderHomeScreen() {
@@ -36,16 +90,16 @@ export default class CoinExplorer {
     this.ctx.fillText("Press esc to go back to home screen", 340, 560);
 
     const coin = new Image();
+    coin.src = "./src/images/items/coin-gold.png";
     coin.onload = function () {
       this.ctx.drawImage(coin, 280, 470, 40, 40);
     }.bind(this);
-    coin.src = "./src/images/items/coin-gold.png";
 
     const slime = new Image();
+    slime.src = "./src/images/slime/slime.png";
     slime.onload = function() {
       this.ctx.drawImage(slime, 280, 530, 40, 40);
     }.bind(this);
-    slime.src = "./src/images/slime/slime.png";
 
     this.checkEnter = this.checkEnter.bind(this);
     document.addEventListener('keydown', this.checkEnter);
@@ -53,9 +107,9 @@ export default class CoinExplorer {
 
   checkEnter(event) {
     if (event.keyCode === 13) {
-      debugger
+      
+      this.play(this.selectSound);
       document.removeEventListener('keydown', this.checkEnter);
-      this.ctx.fillStyle = "black"
       this.currentLevel = 1;
       this.newGame();
     }
@@ -89,6 +143,7 @@ export default class CoinExplorer {
 
   checkRestart(event) {
     if (event.keyCode === 82) {
+      this.play(this.selectSound);
       document.removeEventListener('keydown', this.checkRestart);
       this.gameRunning = true;
       this.newGame();
@@ -96,6 +151,8 @@ export default class CoinExplorer {
   }
 
   renderWin() {
+    this.gameMusic.pause();
+    this.play(this.winMusic);
     this.ctx.clearRect(0, 0, this.gameWidth, this.gameHeight);
 
     this.ctx.fillStyle = "black";
@@ -116,18 +173,22 @@ export default class CoinExplorer {
       this.ctx.drawImage(chest, 430, 250, 139, 149);
     }.bind(this);
     chest.src = "./src/images/items/chest-gold-close.png";
-
   }
 
   newGame(){
     debugger
+    if (!this.gameRunning){
+      this.menuMusic.pause()
+      this.play(this.gameMusic);
+    }
+    this.ctx.fillStyle = "black"
     this.gameRunning = true;
     this.coins = 0;
     this.time = 60;
     this.prevTime = 0;
     this.levels = new Levels().getLevels()
     this.maxLevel = this.levels.length - 1;
-    this.board = new Board(this.gameWidth, this.gameHeight, this.ctx, this.levels[this.currentLevel]);
+    this.board = new Board(this.gameWidth, this.gameHeight, this.ctx, this.levels[this.currentLevel], this.currentLevel);
     this.gameLoop = this.gameLoop.bind(this);
     this.gameLoop();
   }
@@ -144,21 +205,21 @@ export default class CoinExplorer {
 
     let result = this.board.updateBoard(time);
     if (typeof result === 'boolean'){
-      debugger
-      this.gameRunning = false;
+      
+      // this.gameRunning = false;
       this.renderGameOver();
       return;
     }
 
     this.coins += (isNaN(result) ? 0 : result);
     if (this.coins >= this.board.numCoins){
-      debugger
-      this.gameRunning = false;
+      
       if (this.currentLevel < this.maxLevel){
         this.currentLevel += 1;
         this.newGame();
       }
       else {
+        // this.gameRunning = false;
         this.renderWin();
       }
       return;

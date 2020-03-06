@@ -9,7 +9,7 @@ export default class InputHandler {
           break;
         case 32:
         case 38:
-          character.moveCharacter('up');
+            character.moveCharacter('up');
           break;
         case 39:
           character.moveCharacter('right');

@@ -1,5 +1,4 @@
 import Character from "./character";
-import InputHandler from "./input";
 import Tile from "./tile";
 import Coin from "./coin";
 import Spike from "./spike";
@@ -7,22 +6,25 @@ import Spike from "./spike";
 // size 25 x 18 (1000 x 720), 40 x 40 pixels per block
 
 export default class Board {
-  constructor(gameWidth, gameHeight, ctx, level){
-    debugger
+  constructor(gameWidth, gameHeight, ctx, level, currLevel){
+    
     this.ctx = ctx;
+    this.currLevel = currLevel;
     this.gameWidth = gameWidth;
     this.gameHeight = gameHeight;
     this.board = level;
-    this.character = new Character(this.gameWidth, this.gameHeight, 600, 600);
-    new InputHandler(this.character);
     this.coinsArr = [];
     this.tilesArr = [];
     this.spikesArr = [];
+    this.tree = new Image();
+    this.tree.src = "./src/images/bg/sakura.png";
+    this.grass = new Image();
+    this.grass.src = "./src/images/tiles/grass.png";
     this.initializeBoard();
   }
 
   initializeBoard() {
-    debugger
+    
     let pos_x;
     let pos_y;
     let temp;
@@ -37,6 +39,8 @@ export default class Board {
           this.tilesArr.push(tile);
         }
         else if (this.board[i][j] === "P"){
+          
+          this.character = new Character(this.gameWidth, this.gameHeight, pos_x, pos_y);
           temp.push(this.character);
         }
         else if (this.board[i][j] === "C") {
@@ -55,19 +59,23 @@ export default class Board {
       }
       this.board[i] = temp;
     }
-    debugger
+    
     this.numCoins = this.coinsArr.length;
   }
 
   updateBoard(time) {
     if (!time) return;
 
-    // Render sakura trees
-    const treeImage = new Image();
-    treeImage.src = "./src/images/bg/sakura.png";
-    this.ctx.drawImage(treeImage, 40, -20, 150, 300);
-    this.ctx.drawImage(treeImage, 900, 80, 120, 200);
-    
+    // Render background environment
+    if (this.currLevel === 1) {
+      this.ctx.drawImage(this.tree, 40, -20, 175, 300);
+      this.ctx.drawImage(this.tree, 900, 80, 120, 200);
+
+      // for (let i=0; i < 18; i++){
+      //   this.ctx.drawImage(this.grass, i*40, 640, 40, 40);
+      // }
+    }
+
     // Render tiles
     for (let i=0; i < this.tilesArr.length; i++){
       this.tilesArr[i].renderTile();

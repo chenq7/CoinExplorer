@@ -3,16 +3,52 @@ export default class Character {
   constructor(gameWidth, gameHeight, startX, startY) {
     this.gameWidth = gameWidth;
     this.gameHeight = gameHeight;
-    this.characterWidth = 40;
-    this.characterHeight = 40;
+    this.characterWidth = 39.99;
+    this.characterHeight = 39.99;
     this.jumping = false;
     this.x_velocity = 0;
-    this.y_velocity = 5;
+    this.y_velocity = 0;
     this.position = { x: startX, y: startY }
     this.prevPosition = { x: startX, y: startY }
     this.characterImage = new Image();
     this.characterImage.src = "./src/images/slime/slime.png";
     this.flipped = false;
+    this.setSound()
+
+    this.left = false;
+    this.right = false;
+    this.up = false;
+
+    document.addEventListener('keydown', (event) => {
+      switch (event.keyCode) {
+        case 37:
+          this.left = true;
+          break;
+        case 32:
+        case 38:
+          this.up = true;
+          break;
+        case 39:
+          this.right = true;
+          break;
+      }
+    })
+
+    document.addEventListener("keyup", event => {
+      switch (event.keyCode) {
+        case 37:
+          this.left = false;
+          break;
+        case 32:
+        case 38:
+          this.up = false;
+          break;
+        case 39:
+          this.right = false;
+          break;
+      }
+    });
+
   }
 
   getLeft() { return this.position.x }
@@ -35,6 +71,17 @@ export default class Character {
   setPrevTop(y) { this.prevPosition.y = y }
   setPrevBottom(y) { this.prevPosition.y = y - this.characterHeight }
 
+  setSound() {
+    this.coinSound = new Audio("./src/audio/sound/coin-sound.mp3");
+    this.coinSound.volume = 0.4;
+    this.jumpSound = new Audio("./src/audio/sound/jump.mp3");
+  }
+
+  play(sound) {
+    sound.pause();
+    sound.currentTime = 0;
+    sound.play();
+  }
 
   renderCharacter(ctx) {
     ctx.drawImage(
@@ -46,41 +93,43 @@ export default class Character {
     );
   }
 
-  moveCharacter(direction) {
-    switch(direction){
-      case 'none':
-        this.x_velocity = 0;
-        break;
-      case 'left':
-        if (!this.flipped){
-          this.flipped = true;
-          this.characterImage.src = "./src/images/slime/left-slime.png";
-        }
-        this.x_velocity = -7;
-        break;
-      case 'right':
-        if (this.flipped) {
-          this.flipped = false;
-          this.characterImage.src = "./src/images/slime/right-slime.png";
-        }
-        this.x_velocity = 7; 
-        break;
-      case 'up':
-        this.y_velocity = -10;
-        break;
-      case 'fall':
-        this.y_velocity = 5;
-        break;
+  updateCharacter() {
+    
+    if (this.up && this.jumping == false) {
+      this.play(this.jumpSound);
+      this.y_velocity -= 36;
+      this.jumping = true;
     }
+    if (this.left) {
+      if (!this.flipped) {
+        this.flipped = true;
+        this.characterImage.src = "./src/images/slime/left-slime.png";
+      }
+      this.x_velocity -= 0.9;
+    }
+    if (this.right) {
+      if (this.flipped) {
+        this.flipped = false;
+        this.characterImage.src = "./src/images/slime/right-slime.png";
+      }
+      this.x_velocity += 0.9;
+    }
+    
+    this.y_velocity += 1.5;
+
+    this.prevPosition.x = this.position.x;
+    this.prevPosition.y = this.position.y;
+
+    this.position.x += this.x_velocity;
+    this.position.y += this.y_velocity;
+    this.x_velocity *= 0.85;
+    this.y_velocity *= 0.85;
   }
 
   update(board, coins, spikes) {
-    this.prevPosition.x = this.position.x;
-    this.prevPosition.y = this.position.y;
-    
-    this.position.x += this.x_velocity;
-    this.position.y += this.y_velocity;
-    
+
+    this.updateCharacter();
+
     this.handleEdgeCollision();
 
     // handle tile collision 
@@ -134,6 +183,7 @@ export default class Character {
     if (this.getBottom() > this.gameHeight){
       this.setPrevBottom(this.getBottom());
       this.setBottom(this.gameHeight);
+      this.jumping = false;
     } 
   }
 
@@ -144,6 +194,7 @@ export default class Character {
         this.getLeft() + coins[i].width > coins[i].position.x &&
         this.getTop() < coins[i].position.y + coins[i].height &&
         this.getBottom() > coins[i].position.y) {
+        this.play(this.coinSound);
         coins.splice(i, 1);
       }
     }
@@ -168,7 +219,7 @@ export default class Character {
       if (this.topTileCollision(tileY)) return;
       if (this.leftTileCollision(tileX)) return;
       if (this.rightTileCollision(tileX + tileSize)) return;
-      if (this.bottomTileCollision(tileY + tileSize)) return;
+      // if (this.bottomTileCollision(tileY + tileSize)) return;
     }
   }
 
@@ -203,6 +254,7 @@ export default class Character {
     if (this.getBottom() > topTile && this.getPrevBottom() <= topTile){
       this.setPrevBottom(this.getBottom());
       this.setBottom(topTile - 0.01);
+      this.jumping = false;
       return true;
     }
     return false;
