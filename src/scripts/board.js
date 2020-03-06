@@ -2,6 +2,7 @@ import Character from "./character";
 import Tile from "./tile";
 import Coin from "./coin";
 import Spike from "./spike";
+import { Snail, Pig, Fairy } from "./monster";
 
 // size 25 x 18 (1000 x 720), 40 x 40 pixels per block
 
@@ -16,6 +17,7 @@ export default class Board {
     this.coinsArr = [];
     this.tilesArr = [];
     this.spikesArr = [];
+    this.monsters = [];
     this.tree = new Image();
     this.tree.src = "./src/images/bg/sakura.png";
     this.grass = new Image();
@@ -53,6 +55,16 @@ export default class Board {
           temp.push(spike);
           this.spikesArr.push(spike);
         }
+        else if (this.board[i][j] === "Z") {
+          let monster = new Snail(pos_x, pos_y, this.ctx, this.gameWidth, this.gameHeight);
+          temp.push(monster);
+          this.monsters.push(monster);
+        }
+        else if (this.board[i][j] === "X") {
+          let monster = new Fairy(pos_x, pos_y, this.ctx, this.gameWidth, this.gameHeight);
+          temp.push(monster);
+          this.monsters.push(monster);
+        }
         else {
           temp.push(" ");
         }
@@ -70,10 +82,6 @@ export default class Board {
     if (this.currLevel === 1) {
       this.ctx.drawImage(this.tree, 40, -20, 175, 300);
       this.ctx.drawImage(this.tree, 900, 80, 120, 200);
-
-      // for (let i=0; i < 18; i++){
-      //   this.ctx.drawImage(this.grass, i*40, 640, 40, 40);
-      // }
     }
 
     // Render tiles
@@ -91,9 +99,15 @@ export default class Board {
       this.spikesArr[i].renderSpike();
     }
 
+    // Render monsters
+    for (let i = 0; i < this.monsters.length; i++) {
+      debugger
+      this.monsters[i].renderMonster();
+    }
+
     // Update score and character position
     let numCoins = this.coinsArr.length;
-    let result = this.character.update(this.board, this.coinsArr, this.spikesArr);
+    let result = this.character.update(this.board, this.coinsArr, this.spikesArr, this.monsters);
     if (typeof result === 'boolean') return true;
     this.coinsArr = result;
     

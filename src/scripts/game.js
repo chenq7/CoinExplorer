@@ -186,7 +186,7 @@ export default class CoinExplorer {
     this.coins = 0;
     this.time = 60;
     this.prevTime = 0;
-    this.levels = new Levels().getLevels()
+    this.levels = Levels();
     this.maxLevel = this.levels.length - 1;
     this.board = new Board(this.gameWidth, this.gameHeight, this.ctx, this.levels[this.currentLevel], this.currentLevel);
     this.gameLoop = this.gameLoop.bind(this);

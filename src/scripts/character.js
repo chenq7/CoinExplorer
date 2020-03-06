@@ -10,10 +10,9 @@ export default class Character {
     this.y_velocity = 0;
     this.position = { x: startX, y: startY }
     this.prevPosition = { x: startX, y: startY }
-    this.characterImage = new Image();
-    this.characterImage.src = "./src/images/slime/slime.png";
     this.flipped = false;
-    this.setSound()
+    this.setSound();
+    this.setImage();
 
     this.left = false;
     this.right = false;
@@ -77,6 +76,15 @@ export default class Character {
     this.jumpSound = new Audio("./src/audio/sound/jump.mp3");
   }
 
+  setImage() {
+    this.characterImage = new Image();
+    this.characterImage.src = "./src/images/slime/slime.png";
+    this.leftImage = new Image();
+    this.leftImage.src = "./src/images/slime/left-slime.png";
+    this.rightImage = new Image();
+    this.rightImage.src = "./src/images/slime/right-slime.png";
+  }
+
   play(sound) {
     sound.pause();
     sound.currentTime = 0;
@@ -103,19 +111,19 @@ export default class Character {
     if (this.left) {
       if (!this.flipped) {
         this.flipped = true;
-        this.characterImage.src = "./src/images/slime/left-slime.png";
+        this.characterImage = this.leftImage;
       }
       this.x_velocity -= 0.9;
     }
     if (this.right) {
       if (this.flipped) {
         this.flipped = false;
-        this.characterImage.src = "./src/images/slime/right-slime.png";
+        this.characterImage = this.rightImage;
       }
       this.x_velocity += 0.9;
     }
     
-    this.y_velocity += 1.5;
+    this.y_velocity += 1.3;
 
     this.prevPosition.x = this.position.x;
     this.prevPosition.y = this.position.y;
@@ -126,7 +134,7 @@ export default class Character {
     this.y_velocity *= 0.85;
   }
 
-  update(board, coins, spikes) {
+  update(board, coins, spikes, monsters) {
 
     this.updateCharacter();
 
@@ -163,7 +171,8 @@ export default class Character {
 
     if (this.getBottom() > this.gameHeight) this.setBottom(this.gameHeight);
 
-    if (this.handleSpikeCollision(spikes)) return true;;
+    if (this.handleMonsterCollision(monsters)) return true;
+    if (this.handleSpikeCollision(spikes)) return true;
     return this.handleCoinCollision(coins);   
   }
 
@@ -208,6 +217,19 @@ export default class Character {
         this.getLeft() + spikes[i].width > spikes[i].position.x &&
         this.getTop() < spikes[i].position.y + spikes[i].height &&
         this.getBottom() > spikes[i].position.y) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  handleMonsterCollision(monsters) {
+    for (let i = 0; i < monsters.length; i++) {
+      if (
+        this.getLeft() < monsters[i].position.x + monsters[i].width &&
+        this.getLeft() + monsters[i].width > monsters[i].position.x &&
+        this.getTop() < monsters[i].position.y + monsters[i].height &&
+        this.getBottom() > monsters[i].position.y) {
         return true;
       }
     }

@@ -1,18 +1,17 @@
 
 
-export default class Levels{
-  getLevels() {
+export default function() {
     return [[],
 
    ["                         ",
     "       C C C C C C       ",
     "       ############      ",
-    "     #              #    ",
+    "     #                   ",
     "   #                     ",
-    "                      #  ",
-    "SSSSSS                   ",
-    "###############         #",
-    "                    #####",
+    " # X                     ",
+    "                         ",
+    "###################    ##",
+    "                    ##   ",
     "C     C C C C C C C      ",
     "#     #############      ",
     "##C                      ",
@@ -20,14 +19,14 @@ export default class Levels{
     "###### C            #####",
     "       #                 ",
     "         #               ",
-    "       M       P         ",
+    "       Z       P         ",
     "#########################"],
 
     
    ["                         ",
     "                         ",
     "                C   C    ",
-    "               ##   #    ",
+    "   X           ##   #    ",
     "             C           ",
     "            ##           ",
     "          C              ",
@@ -80,7 +79,7 @@ export default class Levels{
     "                 C       ",
     "                 #       ",
     "SSSSSSSSSSSSSSSSSSSSSSSSS"]
-  ]}
+  ]
 }; 
 
 //  ["                         ",
