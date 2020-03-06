@@ -9,6 +9,7 @@ export default class CoinExplorer {
     this.gameRunning = false;
     this.currentLevel = 1;
     this.muted = false;
+    this.isPlaying = true;
     this.setSound();
     this.renderHomeScreen();
     this.addListeners();
