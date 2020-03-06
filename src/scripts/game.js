@@ -176,7 +176,6 @@ export default class CoinExplorer {
   }
 
   newGame(){
-    debugger
     if (!this.gameRunning){
       this.menuMusic.pause()
       this.play(this.gameMusic);

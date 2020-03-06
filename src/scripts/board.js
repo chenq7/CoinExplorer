@@ -76,7 +76,6 @@ export default class Board {
   }
 
   updateBoard(time) {
-    debugger;
     if (!time) return;
 
     // Render background environment
