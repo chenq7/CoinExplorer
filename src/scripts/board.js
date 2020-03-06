@@ -76,6 +76,7 @@ export default class Board {
   }
 
   updateBoard(time) {
+    debugger;
     if (!time) return;
 
     // Render background environment
@@ -101,7 +102,6 @@ export default class Board {
 
     // Render monsters
     for (let i = 0; i < this.monsters.length; i++) {
-      debugger
       this.monsters[i].renderMonster();
     }
 
