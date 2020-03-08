@@ -245,10 +245,12 @@ export default class Character {
     }
   }
 
-  bottomTileCollision(bottomTile){
-    if (this.getTop() < bottomTile && this.getPrevTop() >= bottomTile){
-      this.setPrevTop(this.getTop());
-      this.setTop(bottomTile);
+  topTileCollision(topTile) {
+    if (this.getBottom() > topTile && this.getPrevBottom() <= topTile) {
+      console.log("colloding with top tile");
+      this.setPrevBottom(this.getBottom());
+      this.setBottom(topTile - 0.01);
+      this.jumping = false;
       return true;
     }
     return false;
@@ -272,11 +274,10 @@ export default class Character {
     return false;
   }
 
-  topTileCollision(topTile){
-    if (this.getBottom() > topTile && this.getPrevBottom() <= topTile){
-      this.setPrevBottom(this.getBottom());
-      this.setBottom(topTile - 0.01);
-      this.jumping = false;
+  bottomTileCollision(bottomTile) {
+    if (this.getTop() < bottomTile && this.getPrevTop() >= bottomTile) {
+      this.setPrevTop(this.getTop());
+      this.setTop(bottomTile);
       return true;
     }
     return false;
