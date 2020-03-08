@@ -237,7 +237,9 @@ export default class Character {
   }
 
   handleTileCollision(value, tileX, tileY, tileSize){
+    console.log("in handle collision");
     if (value instanceof Object && value.constructor.name === 'Tile'){
+      console.log("tile found!");
       if (this.topTileCollision(tileY)) return;
       if (this.leftTileCollision(tileX)) return;
       if (this.rightTileCollision(tileX + tileSize)) return;
@@ -246,8 +248,9 @@ export default class Character {
   }
 
   topTileCollision(topTile) {
+    console.log("inside top tile func");
     if (this.getBottom() > topTile && this.getPrevBottom() <= topTile) {
-      console.log("colloding with top tile");
+      console.log("updating top tile");
       this.setPrevBottom(this.getBottom());
       this.setBottom(topTile - 0.01);
       this.jumping = false;
