@@ -65,6 +65,11 @@ export default class Board {
           temp.push(monster);
           this.monsters.push(monster);
         }
+        else if (this.board[i][j] === "V") {
+          let monster = new Pig(pos_x, pos_y, this.ctx, this.gameWidth, this.gameHeight);
+          temp.push(monster);
+          this.monsters.push(monster);
+        }
         else {
           temp.push(" ");
         }

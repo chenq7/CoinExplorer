@@ -1,7 +1,7 @@
 
 export class Monster {
   constructor(pos_x, pos_y, ctx, gameWidth, gameHeight){
-    this.position = { x: pos_x, y: pos_y - 10 }
+    this.position = { x: pos_x, y: pos_y}
     this.ctx = ctx;
     this.gameWidth = gameWidth;
     this.gameHeight = gameHeight;
@@ -12,12 +12,12 @@ export class Monster {
     this.leftImage.src = leftImage
     this.rightImage = new Image();
     this.rightImage.src = rightImage
-    this.monster = this.rightImage;
+    this.monster = this.leftImage;
   }
 
   renderMonster() {
     this.handleEdgeCollision();
-    this.position.x += this.speed;
+    this.position.x -= this.speed;
     this.ctx.drawImage(
       this.monster,
       this.position.x,
@@ -46,8 +46,8 @@ export class Snail extends Monster {
   constructor(pos_x, pos_y, ctx, gameWidth, gameHeight){
     super(pos_x, pos_y, ctx, gameWidth, gameHeight);
     this.speed = 1.5;
-    this.width = 50;
-    this.height = 50;
+    this.width = 40;
+    this.height = 40;
     let left = "./src/images/monsters/left-snail.png";
     let right = "./src/images/monsters/right-snail.png";
     this.setImage(left, right);
@@ -58,9 +58,10 @@ export class Snail extends Monster {
 export class Fairy extends Monster {
   constructor(pos_x, pos_y, ctx, gameWidth, gameHeight) {
     super(pos_x, pos_y, ctx, gameWidth, gameHeight);
-    this.speed = 1;
-    this.width = 40;
-    this.height = 47;
+    this.speed = 1.8;
+    this.width = 36;
+    this.height = 39;
+    this.position.y = this.position.y - (this.height - 40);
     let left = "./src/images/monsters/left-fairy.png";
     let right = "./src/images/monsters/right-fairy.png";
     this.setImage(left, right);
@@ -74,6 +75,7 @@ export class Pig extends Monster {
     this.speed = 2.5;
     this.width = 60;
     this.height = 50;
+    this.position.y = this.position.y - (this.height - 40);
     let left = "./src/images/monsters/left-pig.png";
     let right = "./src/images/monsters/right-pig.png";
     this.setImage(left, right);
