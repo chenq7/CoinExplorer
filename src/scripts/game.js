@@ -19,6 +19,7 @@ export default class CoinExplorer {
     this.menuMusic.volume = 0.3;
     this.menuMusic.loop = true;
     this.gameMusic = new Audio("./src/audio/music/background.mp3");
+    this.menuMusic.volume = 0.7;
     this.gameMusic.loop = true;
     this.winMusic = new Audio("./src/audio/music/victory.mp3");
     this.winMusic.loop = true;
