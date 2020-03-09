@@ -1,3 +1,4 @@
+import Tile from "./tile";
 
 export default class Character {
   constructor(gameWidth, gameHeight, startX, startY) {
@@ -238,7 +239,7 @@ export default class Character {
 
   handleTileCollision(value, tileX, tileY, tileSize){
     // console.log("in handle collision");
-    if (value instanceof Object && value.constructor.name === 'Tile'){
+    if (value instanceof Object && value instanceof Tile){
       // console.log("tile found!");
       if (this.topTileCollision(tileY)) return;
       if (this.leftTileCollision(tileX)) return;
