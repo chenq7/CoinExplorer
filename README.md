@@ -5,6 +5,8 @@
 
 Coin Explorer is a platform game where a user controls a character to collect as many coins as possible in a set time frame. The game will be over upon dying to obstacles (spikes, monsters, etc) or when the time runs out. The character will be able to shoot monsters to kill them. The goal is to collect as many coins as possible before the time runs out and achieve a top standing on the leaderboards. 
 
+[Live Link](https://chenq7.github.io/CoinExplorer/)
+
 ## Functionality and MVPs
 
 In Coin Explorer, users will be able to:
