@@ -3,7 +3,7 @@
 
 ## Background and Overview
 
-Coin Explorer is a platform game where a user controls a character to collect as many coins as possible in a set time frame. The game will be over upon dying to obstacles (spikes, monsters, etc) or when the time runs out. The character will be able to shoot monsters to kill them. The goal is to collect as many coins as possible before the time runs out and achieve a top standing on the leaderboards. 
+Coin Explorer is a level based platform game where a user controls a slime to collect all the coins in order to move on to the next level. The game will be over upon dying to obstacles (spikes, monsters, etc) and the user is able to restart at their current level. The goal is to beat as many levels as possible in the shortest time possible. 
 
 [Live Link](https://chenq7.github.io/CoinExplorer/)
 
@@ -11,10 +11,10 @@ Coin Explorer is a platform game where a user controls a character to collect as
 
 In Coin Explorer, users will be able to:
 * Move left, right, and jump
-* Shoot monsters
+* Collide with platforms and obstacles
 * Collect coins
-* See current time left and coins collected
-* See top scores on leaderboards 
+* See time spent and coins collected
+* Die to monsters and obstacles such as spikes 
 
 ## Wireframes
 
@@ -32,18 +32,16 @@ https://wireframe.cc/VIcLO6
 * Day 1
   * Organize/update file structures, Research/write game logic
 * Day 2
-  * Finish up player movement and working on level building
+  * Finish up player movement and working on level building/tile collision
 * Day 3
-  * Finish up level building/collision, add coins
+  * Finish up level building/collision and coins collision
 * Day 4
-  * Add monsters, shooting, and leaderboards
+  * Add spikes and different movable monsters
 * Day 5 
-  * Add spikes, finish styling page, add music/sound
+  * Style homepage, add homescreen, game over screen, win screen and add music and sound
 
 ## Bonus Features
 
-* Be able to buy new characters/weapons with coins (maybe different abilities)
-* Make the level randomly generated instead of a static level
-* fog animation in background
-
-Notes: refactor collide object, levels class, renderImage
+* Be able to kill monsters with slime and add monster drop
+* Make a new mode where levels are randomly generated
+* fog animation in background, styling each level, etc
