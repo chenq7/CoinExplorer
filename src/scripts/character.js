@@ -228,7 +228,7 @@ export default class Character {
     for (let i = 0; i < monsters.length; i++) {
       if (
         this.getLeft() < monsters[i].position.x + monsters[i].width &&
-        this.getLeft() + monsters[i].width > monsters[i].position.x &&
+        this.getRight() > monsters[i].position.x &&
         this.getTop() < monsters[i].position.y + monsters[i].height &&
         this.getBottom() > monsters[i].position.y) {
         return true;

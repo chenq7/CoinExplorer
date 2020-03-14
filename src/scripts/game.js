@@ -48,13 +48,7 @@ export default class CoinExplorer {
       }
     });
     document.addEventListener('keydown', event => {
-      if (event.keyCode === 27) {
-        this.gameRunning = false;
-        this.pauseAllMusic();
-        this.play(this.selectSound);
-        this.play(this.menuMusic);
-        this.renderHomeScreen();
-      }
+      // m key
       if (event.keyCode === 77){
         if (this.muted){
           if (this.gameRunning){
@@ -117,6 +111,19 @@ export default class CoinExplorer {
     }
   }
 
+  checkEsc(event){
+    // esc key
+    if (event.keyCode === 27) {
+      document.removeEventListener('keydown', this.checkEsc);
+      document.removeEventListener('keydown', this.checkRestart);
+      this.gameRunning = false;
+      this.pauseAllMusic();
+      this.play(this.selectSound);
+      this.play(this.menuMusic);
+      this.renderHomeScreen();
+    }
+  }
+
   renderGameOver() {
     this.ctx.clearRect(0, 0, this.gameWidth, this.gameHeight);
 
@@ -162,13 +169,15 @@ export default class CoinExplorer {
 
     this.ctx.font = "bold 80px Arial";
     this.ctx.fillStyle = "white";
-    this.ctx.fillText("YOU WIN!", 300, 200);
+    this.ctx.fillText("YOU WIN!", 305, 200);
 
     this.ctx.font = "bold 30px Arial";
     this.ctx.fillText("Congrats on beating the game!", 280, 480);
 
-    this.ctx.fillText(`You died a total of ${this.numDeaths} times`, 325, 560);
+    this.ctx.fillStyle = "blue"
+    this.ctx.fillText(`You died a total of ${this.numDeaths} times`, 322, 560);
     
+    this.ctx.fillStyle = "white"
     this.ctx.font = "bold 20px Arial";
     this.ctx.fillText("Press esc to go back to home screen", 325, 640);
 
@@ -185,6 +194,9 @@ export default class CoinExplorer {
       this.play(this.gameMusic);
       this.numDeaths = 0;
     }
+    document.removeEventListener('keydown', this.checkEsc);
+    this.checkEsc = this.checkEsc.bind(this);
+    document.addEventListener('keydown', this.checkEsc);
     this.ctx.fillStyle = "black"
     this.gameRunning = true;
     this.coins = 0;
