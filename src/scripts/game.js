@@ -8,6 +8,7 @@ export default class CoinExplorer {
     this.gameHeight = gameCanvas.height;
     this.gameRunning = false;
     this.currentLevel = 1;
+    this.numDeaths = 0;
     this.muted = false;
     this.setSound();
     this.renderHomeScreen();
@@ -164,10 +165,12 @@ export default class CoinExplorer {
     this.ctx.fillText("YOU WIN!", 300, 200);
 
     this.ctx.font = "bold 30px Arial";
-    this.ctx.fillText("Congrats on beating the game!", 280, 500);
+    this.ctx.fillText("Congrats on beating the game!", 280, 480);
 
+    this.ctx.fillText(`You died a total of ${this.numDeaths} times`, 325, 560);
+    
     this.ctx.font = "bold 20px Arial";
-    this.ctx.fillText("Press esc to go back to home screen", 325, 560);
+    this.ctx.fillText("Press esc to go back to home screen", 325, 640);
 
     const chest = new Image();
     chest.onload = function () {
@@ -180,6 +183,7 @@ export default class CoinExplorer {
     if (!this.gameRunning){
       this.menuMusic.pause()
       this.play(this.gameMusic);
+      this.numDeaths = 0;
     }
     this.ctx.fillStyle = "black"
     this.gameRunning = true;
@@ -201,11 +205,12 @@ export default class CoinExplorer {
 
     this.ctx.clearRect(0, 0, this.gameWidth, this.gameHeight);
 
-    this.renderCoins(this.coins)
+    this.renderDeaths(this.numDeaths);
+    this.renderCoins(this.coins);
 
     let result = this.board.updateBoard(time);
     if (typeof result === 'boolean'){
-      
+      this.numDeaths += 1;
       // this.gameRunning = false;
       this.renderGameOver();
       return;
@@ -225,6 +230,12 @@ export default class CoinExplorer {
       return;
     }
     requestAnimationFrame(this.gameLoop);
+  }
+
+  renderDeaths(deaths) {
+    this.ctx.font = "20px Arial";
+    this.ctx.fillText("Deaths:", 10, 30);
+    this.ctx.fillText(deaths, 90, 30);
   }
 
   renderCoins(coins){
