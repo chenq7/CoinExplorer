@@ -16,16 +16,21 @@ In Coin Explorer, users will be able to:
 * See death count and coins collected
 * Die to monsters and obstacles such as spikes 
 
-## Wireframes
-
-![](src/images/sample_stage.png)
-
-https://wireframe.cc/VIcLO6
-
 ## Architecture and Technology
 
 * Javascript
 * CanvasHTML
+
+## Features
+
+* Home screen and sample gameplay
+![](src/gifs/gameplay.gif)
+
+* Game over screen upon hitting spikes
+![](src/gifs/game_over.gif)
+
+* Victory screen upon clearing all levels
+![](src/gifs/victory.gif)
 
 ## Implementation Timeline
 
