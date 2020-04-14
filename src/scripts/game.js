@@ -17,14 +17,14 @@ export default class CoinExplorer {
 
   setSound() {
     this.menuMusic = new Audio("./src/audio/music/main-menu.mp3");
-    this.menuMusic.volume = 0.3;
+    this.menuMusic.volume = 0.2;
     this.menuMusic.loop = true;
     this.gameMusic = new Audio("./src/audio/music/background.mp3");
-    this.menuMusic.volume = 0.7;
+    this.gameMusic.volume = 0.4;
     this.gameMusic.loop = true;
     this.winMusic = new Audio("./src/audio/music/victory.mp3");
     this.winMusic.loop = true;
-    this.winMusic.volume = 0.35;
+    this.winMusic.volume = 0.15;
     this.selectSound = new Audio("./src/audio/sound/select.wav");
   }
 
@@ -223,7 +223,6 @@ export default class CoinExplorer {
     let result = this.board.updateBoard(time);
     if (typeof result === 'boolean'){
       this.numDeaths += 1;
-      // this.gameRunning = false;
       this.renderGameOver();
       return;
     }
@@ -236,7 +235,6 @@ export default class CoinExplorer {
         this.newGame();
       }
       else {
-        // this.gameRunning = false;
         this.renderWin();
       }
       return;

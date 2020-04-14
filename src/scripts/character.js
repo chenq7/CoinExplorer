@@ -11,7 +11,6 @@ export default class Character {
     this.y_velocity = 0;
     this.position = { x: startX, y: startY }
     this.prevPosition = { x: startX, y: startY }
-    this.flipped = false;
     this.setSound();
     this.setImage();
 
@@ -73,8 +72,9 @@ export default class Character {
 
   setSound() {
     this.coinSound = new Audio("./src/audio/sound/coin-sound.mp3");
-    this.coinSound.volume = 0.4;
+    this.coinSound.volume = 0.3;
     this.jumpSound = new Audio("./src/audio/sound/jump.mp3");
+    this.jumpSound.volume = 0.7;
   }
 
   setImage() {
@@ -110,17 +110,11 @@ export default class Character {
       this.jumping = true;
     }
     if (this.left) {
-      if (!this.flipped) {
-        this.flipped = true;
-        this.characterImage = this.leftImage;
-      }
+      this.characterImage = this.leftImage;
       this.x_velocity -= 0.9;
     }
     if (this.right) {
-      if (this.flipped) {
-        this.flipped = false;
-        this.characterImage = this.rightImage;
-      }
+      this.characterImage = this.rightImage;
       this.x_velocity += 0.9;
     }
     
@@ -238,20 +232,15 @@ export default class Character {
   }
 
   handleTileCollision(value, tileX, tileY, tileSize){
-    // console.log("in handle collision");
     if (value instanceof Object && value instanceof Tile){
-      // console.log("tile found!");
       if (this.topTileCollision(tileY)) return;
       if (this.leftTileCollision(tileX)) return;
       if (this.rightTileCollision(tileX + tileSize)) return;
-      // if (this.bottomTileCollision(tileY + tileSize)) return;
     }
   }
 
   topTileCollision(topTile) {
-    // console.log("inside top tile func");
     if (this.getBottom() > topTile && this.getPrevBottom() <= topTile) {
-      // console.log("updating top tile");
       this.setPrevBottom(this.getBottom());
       this.setBottom(topTile - 0.01);
       this.jumping = false;
