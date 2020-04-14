@@ -23,7 +23,10 @@ In Coin Explorer, users will be able to:
 
 ## Features
 
-* Home screen and sample gameplay
+# Home screen
+![](src/images/home_screen.png)
+
+Sample gameplay with tile colision detection
 ![](src/gifs/gameplay.gif)
 
 * Game over screen upon hitting spikes
