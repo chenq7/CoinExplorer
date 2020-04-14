@@ -23,16 +23,18 @@ In Coin Explorer, users will be able to:
 
 ## Features
 
-# Home screen
+### Home screen
 ![](src/images/home_screen.png)
 
-Sample gameplay with tile colision detection
+The game starts by rendering the home screen with an onclick listener set for the enter key to start the game and render the first level 
+
+### Sample gameplay with tile colision detection
 ![](src/gifs/gameplay.gif)
 
-* Game over screen upon hitting spikes
+### Game over screen upon hitting spikes
 ![](src/gifs/game_over.gif)
 
-* Victory screen upon clearing all levels
+### Victory screen upon clearing all levels
 ![](src/gifs/victory.gif)
 
 ## Implementation Timeline
