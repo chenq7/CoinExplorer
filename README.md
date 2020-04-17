@@ -18,8 +18,8 @@ In Coin Explorer, users will be able to:
 
 ## Architecture and Technology
 
-* Javascript
-* CanvasHTML
+* Javascript - v.8.10
+* CanvasHTML / HTML5
 
 ## Features
 
