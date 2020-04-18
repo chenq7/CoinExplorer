@@ -5,7 +5,7 @@
 
 Coin Explorer is a level based platform game where a user controls a slime to collect all the coins in order to move on to the next level. The game will be over upon dying to obstacles (spikes, monsters, etc) and the user is able to restart at their current level. The goal is to beat as many levels as possible with the least amount of deaths.
 
-[##Live Link](https://chenq7.github.io/CoinExplorer/)
+## [Live Link](https://chenq7.github.io/CoinExplorer/)
 
 ## Functionality and MVPs
 
