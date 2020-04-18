@@ -128,19 +128,6 @@ Every time the player clears a level, the instance variable, currentLevel will b
   }
 ```
 
-## Implementation Timeline
-
-* Day 1
-  * Organize/update file structures, Research/write game logic
-* Day 2
-  * Finish up player movement and working on level building/tile collision
-* Day 3
-  * Finish up level building/collision and coins collision
-* Day 4
-  * Add spikes and different movable monsters
-* Day 5 
-  * Style homepage, add homescreen, game over screen, win screen and add music and sound
-
 ## Bonus Features
 
 * Be able to kill monsters with slime and add monster drop
