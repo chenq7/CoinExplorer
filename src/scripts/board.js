@@ -83,8 +83,8 @@ export default class Board {
 
     // Render background environment
     if (this.currLevel === 1) {
-      this.ctx.drawImage(this.tree, 40, -20, 175, 300);
-      this.ctx.drawImage(this.tree, 900, 80, 120, 200);
+      this.ctx.drawImage(this.tree, this.gameWidth / 25, -(this.gameHeight / 36), this.gameWidth * 0.175, this.gameHeight / 2.4);
+      this.ctx.drawImage(this.tree, this.gameWidth * 0.9, this.gameHeight / 9, this.gameWidth * 0.12, this.gameHeight / 3.6);
     }
 
     // Render tiles
