@@ -46,8 +46,8 @@ export class Snail extends Monster {
   constructor(pos_x, pos_y, ctx, gameWidth, gameHeight){
     super(pos_x, pos_y, ctx, gameWidth, gameHeight);
     this.speed = 1.5;
-    this.width = 40;
-    this.height = 40;
+    this.width = gameWidth / 25;
+    this.height = gameHeight / 18;
     let left = "./src/images/monsters/left-snail.png";
     let right = "./src/images/monsters/right-snail.png";
     this.setImage(left, right);
@@ -59,9 +59,9 @@ export class Fairy extends Monster {
   constructor(pos_x, pos_y, ctx, gameWidth, gameHeight) {
     super(pos_x, pos_y, ctx, gameWidth, gameHeight);
     this.speed = 1.8;
-    this.width = 36;
-    this.height = 39;
-    this.position.y = this.position.y - (this.height - 40);
+    this.width = gameWidth / 27.778;
+    this.height = gameHeight / 18.4615;
+    this.position.y = this.position.y - (this.height - gameHeight / 18);
     let left = "./src/images/monsters/left-fairy.png";
     let right = "./src/images/monsters/right-fairy.png";
     this.setImage(left, right);
@@ -73,9 +73,9 @@ export class Pig extends Monster {
   constructor(pos_x, pos_y, ctx, gameWidth, gameHeight) {
     super(pos_x, pos_y, ctx, gameWidth, gameHeight);
     this.speed = 2.5;
-    this.width = 60;
-    this.height = 50;
-    this.position.y = this.position.y - (this.height - 40);
+    this.width = gameWidth / 50 * 3;
+    this.height = gameHeight / 14.4;
+    this.position.y = this.position.y - (this.height - gameHeight / 18);
     let left = "./src/images/monsters/left-pig.png";
     let right = "./src/images/monsters/right-pig.png";
     this.setImage(left, right);

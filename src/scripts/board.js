@@ -4,8 +4,6 @@ import Coin from "./coin";
 import Spike from "./spike";
 import { Snail, Pig, Fairy } from "./monster";
 
-// size 25 x 18 (1000 x 720), 40 x 40 pixels per block
-
 export default class Board {
   constructor(gameWidth, gameHeight, ctx, level, currLevel){
     
@@ -33,10 +31,10 @@ export default class Board {
     for (let i = 0; i < this.board.length; i++){
       temp = [];
       for (let j = 0; j < this.board[0].length; j++) {
-        pos_y = i * 40;
-        pos_x = j * 40;
+        pos_y = i * this.gameHeight / 18;
+        pos_x = j * this.gameWidth / 25;
         if (this.board[i][j] === "#"){
-          let tile = new Tile(pos_x, pos_y, this.ctx);
+          let tile = new Tile(pos_x, pos_y, this.ctx, this.gameWidth, this.gameHeight,);
           temp.push(tile);
           this.tilesArr.push(tile);
         }
@@ -46,12 +44,12 @@ export default class Board {
           temp.push(this.character);
         }
         else if (this.board[i][j] === "C") {
-          let coin = new Coin(pos_x, pos_y, this.ctx);
+          let coin = new Coin(pos_x, pos_y, this.ctx, this.gameWidth, this.gameHeight,);
           temp.push(coin);
           this.coinsArr.push(coin);
         }
         else if (this.board[i][j] === "S") {
-          let spike = new Spike(pos_x, pos_y, this.ctx);
+          let spike = new Spike(pos_x, pos_y, this.ctx, this.gameWidth, this.gameHeight,);
           temp.push(spike);
           this.spikesArr.push(spike);
         }

@@ -71,30 +71,32 @@ export default class CoinExplorer {
   renderHomeScreen() {
     this.ctx.clearRect(0, 0, this.gameWidth, this.gameHeight);
 
-    this.ctx.font = "bold 80px Arial";
+    const titleFontSize = this.gameWidth > 900 ? 80 : 65;
+
+    this.ctx.font = `bold ${titleFontSize}px Arial`;
     this.ctx.fillStyle = "yellow";
-    this.ctx.fillText("COIN EXPLORER", 170, 300);
+    this.ctx.fillText("COIN EXPLORER", 0.17 * this.gameWidth, this.gameHeight/2.4);
     this.ctx.strokeStyle = "blue";
     this.ctx.lineWidth = 2;
-    this.ctx.strokeText("COIN EXPLORER", 170, 300);
+    this.ctx.strokeText("COIN EXPLORER", 0.17 * this.gameWidth, this.gameHeight / 2.4);
 
     this.ctx.fillStyle = "blue"
     this.ctx.font = "bold 30px Arial";
-    this.ctx.fillText("Press Enter to Begin!", 350, 500);
+    this.ctx.fillText("Press Enter to Begin!", this.gameWidth / 2.857, this.gameHeight / 1.44);
 
     this.ctx.font = "bold 20px Arial";
-    this.ctx.fillText("Press esc to go back to home screen", 340, 560);
+    this.ctx.fillText("Press esc to go back to home screen", this.gameWidth / 2.941, this.gameHeight / 1.2857);
 
     const coin = new Image();
     coin.src = "./src/images/items/coin-gold.png";
     coin.onload = function () {
-      this.ctx.drawImage(coin, 280, 470, 40, 40);
+      this.ctx.drawImage(coin, this.gameWidth * 0.28, this.gameHeight / 1.532, 40, 40);
     }.bind(this);
 
     const slime = new Image();
     slime.src = "./src/images/slime/slime.png";
     slime.onload = function() {
-      this.ctx.drawImage(slime, 280, 530, 40, 40);
+      this.ctx.drawImage(slime, this.gameWidth * 0.28, this.gameHeight / 1.3585, 40, 40);
     }.bind(this);
 
     this.checkEnter = this.checkEnter.bind(this);
@@ -130,19 +132,23 @@ export default class CoinExplorer {
     this.ctx.fillStyle = "black";
     this.ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
 
-    this.ctx.font = "bold 80px Arial";
+    const titleFontSize = this.gameWidth > 900 ? 80 : 65;
+    const retryFontSize = this.gameWidth > 900 ? 30 : 25;
+    const escFontSize = this.gameWidth > 900? 20 : 15;
+
+    this.ctx.font = `bold ${titleFontSize}px Arial`;
     this.ctx.fillStyle = "white";
-    this.ctx.fillText("GAME OVER", 250, 300);
+    this.ctx.fillText("GAME OVER", this.gameWidth * 0.25, this.gameHeight / 2.4);
 
-    this.ctx.font = "bold 30px Arial";
-    this.ctx.fillText("Press r key to retry level", 325, 500);
+    this.ctx.font = `bold ${retryFontSize}px Arial`;
+    this.ctx.fillText("Press r key to retry level", this.gameWidth * 0.325, this.gameHeight / 1.44);
 
-    this.ctx.font = "bold 20px Arial";
-    this.ctx.fillText("Press esc to go back to home screen", 325, 560);
+    this.ctx.font = `bold ${escFontSize}px Arial`;
+    this.ctx.fillText("Press esc to go back to home screen", this.gameWidth * 0.325, this.gameHeight / 1.2857);
 
     const sadSlime = new Image();
     sadSlime.onload = function () {
-      this.ctx.drawImage(sadSlime, 730, 500, 298, 200);
+      this.ctx.drawImage(sadSlime, this.gameWidth * 0.73, this.gameHeight / 1.44, this.gameWidth * 0.298, this.gameHeight / 3.6);
     }.bind(this);
     sadSlime.src = "./src/images/slime/sad-slime.png";
 
@@ -167,23 +173,27 @@ export default class CoinExplorer {
     this.ctx.fillStyle = "black";
     this.ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
 
-    this.ctx.font = "bold 80px Arial";
-    this.ctx.fillStyle = "white";
-    this.ctx.fillText("YOU WIN!", 305, 200);
+    const titleFontSize = this.gameWidth > 900 ? 80 : 65;
+    const congratsFontSize = this.gameWidth > 900 ? 30 : 25;
+    const escFontSize = this.gameWidth > 900 ? 20 : 15;
 
-    this.ctx.font = "bold 30px Arial";
-    this.ctx.fillText("Congrats on beating the game!", 280, 480);
+    this.ctx.font = `bold ${titleFontSize}px Arial`;
+    this.ctx.fillStyle = "white";
+    this.ctx.fillText("YOU WIN!", this.gameWidth * 0.305, this.gameHeight / 3.6);
+
+    this.ctx.font = `bold ${congratsFontSize}px Arial`;
+    this.ctx.fillText("Congrats on beating the game!", this.gameWidth * 0.28, this.gameHeight / 1.5);
 
     this.ctx.fillStyle = "blue"
-    this.ctx.fillText(`You died a total of ${this.numDeaths} times`, 322, 560);
+    this.ctx.fillText(`You died a total of ${this.numDeaths} times`, this.gameWidth * 0.322, this.gameHeight / 1.2857);
     
     this.ctx.fillStyle = "white"
-    this.ctx.font = "bold 20px Arial";
-    this.ctx.fillText("Press esc to go back to home screen", 325, 640);
+    this.ctx.font = `bold ${escFontSize}px Arial`;
+    this.ctx.fillText("Press esc to go back to home screen", this.gameWidth * 0.325, this.gameHeight / 1.125);
 
     const chest = new Image();
     chest.onload = function () {
-      this.ctx.drawImage(chest, 430, 250, 139, 149);
+      this.ctx.drawImage(chest, this.gameWidth * 0.43, this.gameHeight / 2.88, this.gameWidth * 0.139, this.gameHeight / 4.832);
     }.bind(this);
     chest.src = "./src/images/items/chest-gold-close.png";
   }

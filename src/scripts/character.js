@@ -4,8 +4,8 @@ export default class Character {
   constructor(gameWidth, gameHeight, startX, startY) {
     this.gameWidth = gameWidth;
     this.gameHeight = gameHeight;
-    this.characterWidth = 39.99;
-    this.characterHeight = 39.99;
+    this.characterWidth = this.gameWidth / 25 - 0.01;
+    this.characterHeight = this.gameHeight / 18 - 0.01;
     this.jumping = false;
     this.x_velocity = 0;
     this.y_velocity = 0;
@@ -106,7 +106,7 @@ export default class Character {
     
     if (this.up && this.jumping == false) {
       this.play(this.jumpSound);
-      this.y_velocity -= 36;
+      this.y_velocity -= this.gameHeight / 20;
       this.jumping = true;
     }
     if (this.left) {
@@ -142,27 +142,30 @@ export default class Character {
     let bottom;
     let value;
 
-    top = Math.floor(this.getTop() / 40);
-    left = Math.floor(this.getLeft() / 40);
+    let tileWidth = this.gameWidth / 25;
+    let tileHeight = this.gameHeight / 18;
+
+    top = Math.floor(this.getTop() / tileHeight);
+    left = Math.floor(this.getLeft() / tileWidth);
     value = board[top][left];
-    this.handleTileCollision(value, left * 40, top * 40, 40);
+    this.handleTileCollision(value, left * tileWidth, top * tileHeight, tileWidth);
 
-    top = Math.floor(this.getTop() / 40);
-    right = Math.floor(this.getRight() / 40);
+    top = Math.floor(this.getTop() / tileHeight);
+    right = Math.floor(this.getRight() / tileWidth);
     value = board[top][right];
-    this.handleTileCollision(value, right * 40, top * 40, 40);
+    this.handleTileCollision(value, right * tileWidth, top * tileHeight, tileWidth);
 
-    bottom = Math.floor(this.getBottom()/ 40);
+    bottom = Math.floor(this.getBottom() / tileHeight);
     bottom = (bottom > 17 ? 17 : bottom);
-    left = Math.floor(this.getLeft() / 40);
+    left = Math.floor(this.getLeft() / tileWidth);
     value = board[bottom][left];
-    this.handleTileCollision(value, left * 40, bottom * 40, 40);
+    this.handleTileCollision(value, left * tileWidth, bottom * tileHeight, tileWidth);
 
-    bottom = Math.floor(this.getBottom() / 40);
+    bottom = Math.floor(this.getBottom() / tileHeight);
     bottom = (bottom > 17 ? 17 : bottom);
-    right = Math.floor(this.getRight() / 40);
+    right = Math.floor(this.getRight() / tileWidth);
     value = board[bottom][right];
-    this.handleTileCollision(value, right * 40, bottom * 40, 40);
+    this.handleTileCollision(value, right * tileWidth, bottom * tileHeight, tileWidth);
 
     if (this.getBottom() > this.gameHeight) this.setBottom(this.gameHeight);
 
