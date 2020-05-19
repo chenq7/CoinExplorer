@@ -93,7 +93,7 @@ This check is done using handleSpikeCollision function inside character class by
 ```
 
 ### Victory screen upon clearing all levels
-![](src/gifs/victory.gif)
+![](src/gifs/victory_screen.gif)
 
 Every time the player clears a level, the instance variable, currentLevel will be incremented by 1. When currentLevel equals to maxLevel, it will call renderWin to render the victory screen
 
